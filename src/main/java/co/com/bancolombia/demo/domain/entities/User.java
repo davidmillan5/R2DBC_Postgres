@@ -7,11 +7,12 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
-@Table(name = "Users")
+@Table(name = "users")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements Persistable<Long> {
 
@@ -21,7 +22,9 @@ public class User implements Persistable<Long> {
     private String name;
 
     @Transient
-    private List<BankAccount> bankAccounts;
+    private List<BankAccount> bankAccounts = new ArrayList<>();
+
+
 
     @Transient
     private boolean newUser;
@@ -55,6 +58,10 @@ public class User implements Persistable<Long> {
 
     public List<BankAccount> getBankAccounts() {
         return Collections.unmodifiableList(bankAccounts);
+    }
+
+    public void setBankAccounts(List<BankAccount> bankAccounts) {
+        this.bankAccounts = bankAccounts;
     }
 
     public User() {

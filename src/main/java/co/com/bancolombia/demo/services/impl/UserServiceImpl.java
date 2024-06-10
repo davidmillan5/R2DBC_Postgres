@@ -1,6 +1,7 @@
 package co.com.bancolombia.demo.services.impl;
 
 import co.com.bancolombia.demo.domain.entities.User;
+import co.com.bancolombia.demo.domain.repositories.BankAccountRepository;
 import co.com.bancolombia.demo.domain.repositories.UserRepository;
 import co.com.bancolombia.demo.exceptions.UserNotFoundException;
 import co.com.bancolombia.demo.services.UserService;
@@ -13,9 +14,11 @@ import reactor.core.publisher.Mono;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final BankAccountRepository bankAccountRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, BankAccountRepository bankAccountRepository) {
         this.userRepository = userRepository;
+        this.bankAccountRepository = bankAccountRepository;
     }
 
     @Override
@@ -27,8 +30,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Flux<User> getAllUsers() {
         return userRepository
-                .findAll();
+                .findAll()
+                .flatMap(this::populateUserAccounts); // Populate bank accounts for each user
     }
+
 
     @Override
     public Mono<User> getUserById(Long id) {
@@ -55,4 +60,17 @@ public class UserServiceImpl implements UserService {
                 .switchIfEmpty(Mono.error(new UserNotFoundException("User not found")))
                 .flatMap(userRepository::delete);
     }
+
+
+    private Mono<User> populateUserAccounts(User user) {
+        return bankAccountRepository
+                .findByUserId(user.getId()) // Fetch bank accounts for the user
+                .collectList()
+                .map(accounts -> {
+                    user.setBankAccounts(accounts); // Set the bank accounts for the user
+                    return user;
+                })
+                .thenReturn(user); // Return the user with bank accounts populated
+    }
+
 }

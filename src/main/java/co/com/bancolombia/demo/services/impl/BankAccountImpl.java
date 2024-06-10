@@ -41,7 +41,7 @@ public class BankAccountImpl implements BankAccountService {
                         .flatMap(result -> switch(result){
                             case "user does not exist",
                                  "you should create a valid user" -> Mono.error(new InvalidUserException(result));
-                            case "user exists" ->   bankAccountRepository.save(account);
+                            case "User exists." -> bankAccountRepository.save(account);
                             default -> Mono.error(new InvalidUserException("Invalid result"));
                         }));
     }

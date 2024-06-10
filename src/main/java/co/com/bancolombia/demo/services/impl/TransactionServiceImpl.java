@@ -40,7 +40,7 @@ public class TransactionServiceImpl implements TransactionService {
                         .flatMap(result -> switch(result){
                             case "account does not exist",
                                 "You should have a valid bank account" -> Mono.error(new InvalidBankAccountException(result));
-                            case "account exists" -> transactionRepository.save(transaction);
+                            case "Bank Account exists." -> transactionRepository.save(transaction);
                             default -> Mono.error(new InvalidBankAccountException(result));
                         }));
     }

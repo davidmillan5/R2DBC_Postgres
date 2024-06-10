@@ -6,10 +6,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Table(name = "BankAccount")
+@Table(name = "bank_accounts")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class BankAccount {
 
@@ -33,7 +34,7 @@ public class BankAccount {
     private Long userId;
 
     @Transient
-    private List<Transaction> transactions;
+    private List<Transaction> transactions = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -74,6 +75,17 @@ public class BankAccount {
     public BankAccount withTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
         return this;
+    }
+
+    public BankAccount() {
+    }
+
+    public BankAccount(Long id, AccountType accountType, double balance, Long userId, List<Transaction> transactions) {
+        this.id = id;
+        this.accountType = accountType;
+        this.balance = balance;
+        this.userId = userId;
+        this.transactions = transactions;
     }
 
     @Override

@@ -5,7 +5,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.Date;
 
-@Table(name = "Transaction")
+@Table(name = "transaction")
 public class Transaction {
 
     public enum TransactionType {
