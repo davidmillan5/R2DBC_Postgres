@@ -19,26 +19,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Mono<User> createUser(User user) {
-        return this.userRepository
+        return userRepository
                 .save(user);
     }
 
     @Override
     public Flux<User> getAllUsers() {
-        return this.userRepository
+        return userRepository
                 .findAll();
     }
 
     @Override
     public Mono<User> getUserById(Long id) {
-        return this.userRepository
+        return userRepository
                 .findById(id)
                 .switchIfEmpty(Mono.error(new RuntimeException("User not found")));
     }
 
     @Override
     public Mono<User> updateUser(User user) {
-        return this.userRepository.findById(user.getId())
+        return userRepository.findById(user.getId())
                 .flatMap(existingUser  ->{
                     existingUser .setName(user.getName());
                     return this.userRepository.save(existingUser );
@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public Mono<Void> deleteUser(Long id) {
-        return this.userRepository
+        return userRepository
                 .findById(id)
                 .switchIfEmpty(Mono.error(new RuntimeException("User not found")))
                 .flatMap(userRepository::delete);

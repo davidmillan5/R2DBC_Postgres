@@ -61,6 +61,9 @@ public class Transaction {
         return bankAccount;
     }
 
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
+    }
 
     public Transaction() {
     }
