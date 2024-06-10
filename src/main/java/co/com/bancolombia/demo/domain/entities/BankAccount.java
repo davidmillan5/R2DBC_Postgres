@@ -30,7 +30,7 @@ public class BankAccount {
 
     private double balance;
 
-    private User user;
+    private Long userId;
 
     @Transient
     private List<Transaction> transactions;
@@ -59,12 +59,12 @@ public class BankAccount {
         this.balance = balance;
     }
 
-    public User getUser() {
-        return user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public List<Transaction> getTransactions() {
@@ -76,25 +76,13 @@ public class BankAccount {
         return this;
     }
 
-    public BankAccount() {
-    }
-
-    public BankAccount(Long id, AccountType accountType, double balance, User user, List<Transaction> transactions) {
-        this.id = id;
-        this.accountType = accountType;
-        this.balance = balance;
-        this.user = user;
-        this.transactions = transactions;
-    }
-
-
     @Override
     public String toString() {
         return "BankAccount{" +
                 "id=" + id +
                 ", accountType=" + accountType +
                 ", balance=" + balance +
-                ", user=" + user +
+                ", userId=" + userId +
                 ", transactions=" + transactions +
                 '}';
     }

@@ -2,6 +2,7 @@ package co.com.bancolombia.demo.services.impl;
 
 import co.com.bancolombia.demo.domain.entities.User;
 import co.com.bancolombia.demo.domain.repositories.UserRepository;
+import co.com.bancolombia.demo.exceptions.UserNotFoundException;
 import co.com.bancolombia.demo.services.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public Mono<User> getUserById(Long id) {
         return userRepository
                 .findById(id)
-                .switchIfEmpty(Mono.error(new RuntimeException("User not found")));
+                .switchIfEmpty(Mono.error(new UserNotFoundException("User not found")));
     }
 
     @Override
@@ -51,7 +52,7 @@ public class UserServiceImpl implements UserService {
     public Mono<Void> deleteUser(Long id) {
         return userRepository
                 .findById(id)
-                .switchIfEmpty(Mono.error(new RuntimeException("User not found")))
+                .switchIfEmpty(Mono.error(new UserNotFoundException("User not found")))
                 .flatMap(userRepository::delete);
     }
 }
