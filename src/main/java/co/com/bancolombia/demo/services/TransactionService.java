@@ -6,7 +6,7 @@ import reactor.core.publisher.Mono;
 
 public interface TransactionService {
 
-    Mono<Transaction> createTransaction(Transaction transaction, Long accountId);
+    Mono<Transaction> createTransaction(Transaction transaction);
     Flux<Transaction> getAllTransactions();
     Mono<Transaction> getTransactionById(Long id);
     Mono<Transaction> updateTransaction(Transaction transaction);

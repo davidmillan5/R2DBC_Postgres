@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
 @Service
-public class ValidateUserImpl implements ValidateUserService {
+public class ValidateUserServiceImpl implements ValidateUserService {
 
     private final UserRepository userRepository;
 
-    public ValidateUserImpl(UserRepository userRepository) {
+    public ValidateUserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

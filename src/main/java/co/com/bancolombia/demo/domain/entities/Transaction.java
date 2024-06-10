@@ -22,7 +22,7 @@ public class Transaction {
 
     private Date date;
 
-    private BankAccount bankAccount;
+    private Long bankAccountId;
 
 
     public Long getId() {
@@ -57,24 +57,12 @@ public class Transaction {
         this.date = date;
     }
 
-    public BankAccount getBankAccount() {
-        return bankAccount;
+    public Long getBankAccountId() {
+        return bankAccountId;
     }
 
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
-    }
-
-    public Transaction() {
-    }
-
-
-    public Transaction(Long id, double amount, TransactionType type, Date date, BankAccount bankAccount) {
-        this.id = id;
-        this.amount = amount;
-        this.type = type;
-        this.date = date;
-        this.bankAccount = bankAccount;
+    public void setBankAccountId(Long bankAccountId) {
+        this.bankAccountId = bankAccountId;
     }
 
     @Override
@@ -84,7 +72,7 @@ public class Transaction {
                 ", amount=" + amount +
                 ", type=" + type +
                 ", date=" + date +
-                ", bankAccount=" + bankAccount +
+                ", bankAccountId=" + bankAccountId +
                 '}';
     }
 }

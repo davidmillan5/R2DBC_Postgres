@@ -23,8 +23,7 @@ public class BankAccountImpl implements BankAccountService {
     public BankAccountImpl(UserRepository userRepository, UserService userService, BankAccountRepository bankAccountRepository, WebClient.Builder builder) {
         this.userService = userService;
         this.bankAccountRepository = bankAccountRepository;
-        this.client = builder.baseUrl("http://localhost:8080" +
-                "").build();
+        this.client = builder.baseUrl("http://localhost:8080").build();
     }
 
     @Override
@@ -33,7 +32,7 @@ public class BankAccountImpl implements BankAccountService {
         return userService.getUserById(account.getUserId())
                 .doOnError(throwable -> System.out.println(throwable.getMessage()))
                 .doOnNext(System.out::println)
-                .onErrorMap(throwable -> new InvalidUserException("You create a valid user first in order to create an account"))
+                .onErrorMap(throwable -> new InvalidUserException("You need to create a valid user in order to create an account"))
                 .flatMap((user) -> client.get()
                         .uri("/validate/user/{userId}",user.getId())
                         .retrieve()
