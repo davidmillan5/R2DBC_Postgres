@@ -1,7 +1,7 @@
 package co.com.bancolombia.demo.services;
 
-import co.com.bancolombia.demo.models.User;
-import co.com.bancolombia.demo.repositories.UserRepository;
+import co.com.bancolombia.demo.domain.entities.User;
+import co.com.bancolombia.demo.domain.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;

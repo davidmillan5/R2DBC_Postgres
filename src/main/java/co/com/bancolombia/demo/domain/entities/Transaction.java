@@ -1,4 +1,4 @@
-package co.com.bancolombia.demo.models;
+package co.com.bancolombia.demo.domain.entities;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
@@ -61,9 +61,6 @@ public class Transaction {
         return bankAccount;
     }
 
-    public void setBankAccount(BankAccount bankAccount) {
-        this.bankAccount = bankAccount;
-    }
 
     public Transaction() {
     }

@@ -1,11 +1,12 @@
-package co.com.bancolombia.demo.models;
+package co.com.bancolombia.demo.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.Collections;
 import java.util.List;
 
 @Table(name = "BankAccount")
@@ -31,6 +32,7 @@ public class BankAccount {
 
     private User user;
 
+    @Transient
     private List<Transaction> transactions;
 
     public Long getId() {
@@ -66,11 +68,12 @@ public class BankAccount {
     }
 
     public List<Transaction> getTransactions() {
-        return transactions;
+        return Collections.unmodifiableList(transactions);
     }
 
-    public void setTransactions(List<Transaction> transactions) {
+    public BankAccount withTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
+        return this;
     }
 
     public BankAccount() {

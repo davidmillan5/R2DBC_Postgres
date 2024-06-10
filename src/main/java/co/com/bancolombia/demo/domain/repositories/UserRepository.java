@@ -1,6 +1,6 @@
-package co.com.bancolombia.demo.repositories;
+package co.com.bancolombia.demo.domain.repositories;
 
-import co.com.bancolombia.demo.models.User;
+import co.com.bancolombia.demo.domain.entities.User;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 

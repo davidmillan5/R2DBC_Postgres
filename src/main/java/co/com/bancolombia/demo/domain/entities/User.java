@@ -1,4 +1,4 @@
-package co.com.bancolombia.demo.models;
+package co.com.bancolombia.demo.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -7,6 +7,7 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.util.Collections;
 import java.util.List;
 
 
@@ -19,6 +20,7 @@ public class User implements Persistable<Long> {
 
     private String name;
 
+    @Transient
     private List<BankAccount> bankAccounts;
 
     @Transient
@@ -52,14 +54,8 @@ public class User implements Persistable<Long> {
     }
 
     public List<BankAccount> getBankAccounts() {
-        return bankAccounts;
+        return Collections.unmodifiableList(bankAccounts);
     }
-
-
-    public void setBankAccounts(List<BankAccount> bankAccounts) {
-        this.bankAccounts = bankAccounts;
-    }
-
 
     public User() {
     }

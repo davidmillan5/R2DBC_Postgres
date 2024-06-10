@@ -1,6 +1,6 @@
-package co.com.bancolombia.demo.repositories;
+package co.com.bancolombia.demo.domain.repositories;
 
-import co.com.bancolombia.demo.models.Transaction;
+import co.com.bancolombia.demo.domain.entities.Transaction;
 
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 

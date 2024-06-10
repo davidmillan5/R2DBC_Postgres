@@ -1,8 +1,8 @@
 package co.com.bancolombia.demo.services;
 
-import co.com.bancolombia.demo.models.BankAccount;
-import co.com.bancolombia.demo.models.User;
-import co.com.bancolombia.demo.repositories.BankAccountRepository;
+import co.com.bancolombia.demo.domain.entities.BankAccount;
+import co.com.bancolombia.demo.domain.entities.User;
+import co.com.bancolombia.demo.domain.repositories.BankAccountRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
