@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     public Flux<User> getAllUsers() {
         return userRepository
                 .findAll()
-                .flatMap(this::populateUserAccounts); // Populate bank accounts for each user
+                .flatMap(this::populateUserAccounts);
     }
 
 
