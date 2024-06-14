@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 public interface TransactionService {
 
     Mono<Transaction> createTransaction(Transaction transaction);
+    Flux<Transaction> createTransactions(Flux<Transaction> transactions);
     Flux<Transaction> getAllTransactions(Pageable pageable);
     Mono<Transaction> getTransactionById(Long id);
     Mono<Transaction> updateTransaction(Transaction transaction);

@@ -33,6 +33,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
+    public Flux<User> createUsers(Flux<User> users) {
+        return users.flatMap(this::createUser);
+    }
+
+
+    @Override
     public Flux<User> getAllUsers(Pageable pageable) {
         return userRepository
                 .findAll(pageable)

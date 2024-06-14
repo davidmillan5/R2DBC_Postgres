@@ -27,6 +27,14 @@ public class BankAccountController {
                 .map(savedAccount -> ResponseEntity.status(HttpStatus.CREATED).body(savedAccount));
     }
 
+
+    @PostMapping("/batch")
+    public Flux<ResponseEntity<BankAccount>> createBankAccounts(@RequestBody Flux<BankAccount> bankAccounts) {
+        return bankAccountService.createBankAccounts(bankAccounts)
+                .map(savedAccount -> ResponseEntity.status(HttpStatus.CREATED).body(savedAccount));
+    }
+
+
     @GetMapping
     public Flux<BankAccount> getAllBankAccounts(@RequestParam(defaultValue = "0") int page,
                                                 @RequestParam(defaultValue = "10") int size) {

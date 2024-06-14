@@ -47,6 +47,13 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    @Transactional
+    public Flux<Transaction> createTransactions(Flux<Transaction> transactions) {
+        return transactions.flatMap(this::createTransaction);
+    }
+
+
+    @Override
     public Flux<Transaction> getAllTransactions(Pageable pageable) {
         return transactionRepository.findAll(pageable);
     }

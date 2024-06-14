@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 
 public interface BankAccountService {
     Mono<BankAccount> createBankAccount(BankAccount account);
+    Flux<BankAccount> createBankAccounts(Flux<BankAccount> accounts);
     Flux<BankAccount> getAllBankAccounts(Pageable pageable);
     Mono<BankAccount> getBankAccountById(Long id);
     Mono<BankAccount> updateBankAccount(BankAccount account);

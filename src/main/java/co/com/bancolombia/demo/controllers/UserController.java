@@ -29,6 +29,14 @@ public class UserController {
                 .onErrorResume(e -> Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()));
     }
 
+    @PostMapping("/batch")
+    public Flux<ResponseEntity<User>> createUsers(@RequestBody Flux<User> users) {
+        return userService.createUsers(users)
+                .map(savedUser -> ResponseEntity.status(HttpStatus.CREATED).body(savedUser))
+                .onErrorResume(e -> Flux.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()));
+    }
+
+
     @Transactional
     @GetMapping
     public Flux<User> getAllUsers(@RequestParam(defaultValue = "0") int page,

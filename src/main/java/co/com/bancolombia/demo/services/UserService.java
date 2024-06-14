@@ -8,6 +8,7 @@ import reactor.core.publisher.Mono;
 
 public interface UserService {
     Mono<User> createUser(User user);
+    Flux<User> createUsers(Flux<User> users);
     Flux<User> getAllUsers(Pageable pageable);
     Mono<User> getUserById(Long id);
     Mono<User> updateUser(User user);

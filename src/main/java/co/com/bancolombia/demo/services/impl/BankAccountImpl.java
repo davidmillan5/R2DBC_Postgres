@@ -51,6 +51,13 @@ public class BankAccountImpl implements BankAccountService {
     }
 
     @Override
+    @Transactional
+    public Flux<BankAccount> createBankAccounts(Flux<BankAccount> accounts) {
+        return accounts.flatMap(this::createBankAccount);
+    }
+
+
+    @Override
     public Flux<BankAccount> getAllBankAccounts(Pageable pageable) {
         return bankAccountRepository.findAll(pageable)
                 .flatMap(this::populateTransactions);
