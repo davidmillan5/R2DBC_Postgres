@@ -3,6 +3,7 @@ package co.com.bancolombia.demo.domain.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Table(name = "transaction")
@@ -20,7 +21,7 @@ public class Transaction {
 
     private TransactionType type;
 
-    private Date date;
+    private LocalDate date;
 
     private Long bankAccountId;
 
@@ -49,11 +50,11 @@ public class Transaction {
         this.type = type;
     }
 
-    public Date getDate() {
+    public LocalDate  getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate  date) {
         this.date = date;
     }
 

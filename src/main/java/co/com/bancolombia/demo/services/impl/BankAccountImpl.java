@@ -2,6 +2,7 @@ package co.com.bancolombia.demo.services.impl;
 
 import co.com.bancolombia.demo.domain.entities.BankAccount;
 import co.com.bancolombia.demo.domain.repositories.BankAccountRepository;
+import co.com.bancolombia.demo.domain.repositories.TransactionRepository;
 import co.com.bancolombia.demo.domain.repositories.UserRepository;
 import co.com.bancolombia.demo.exceptions.BankAccountNotFoundException;
 import co.com.bancolombia.demo.exceptions.InvalidUserException;
@@ -18,11 +19,13 @@ public class BankAccountImpl implements BankAccountService {
 
     private final UserService userService;
     private final BankAccountRepository bankAccountRepository;
+    private final TransactionRepository transactionRepository;
     private final WebClient client;
 
-    public BankAccountImpl(UserRepository userRepository, UserService userService, BankAccountRepository bankAccountRepository, WebClient.Builder builder) {
+    public BankAccountImpl(UserRepository userRepository, UserService userService, BankAccountRepository bankAccountRepository, TransactionRepository transactionRepository, WebClient.Builder builder) {
         this.userService = userService;
         this.bankAccountRepository = bankAccountRepository;
+        this.transactionRepository = transactionRepository;
         this.client = builder.baseUrl("http://localhost:8080").build();
     }
 
@@ -48,13 +51,14 @@ public class BankAccountImpl implements BankAccountService {
 
     @Override
     public Flux<BankAccount> getAllBankAccounts() {
-        return bankAccountRepository.findAll();
+        return bankAccountRepository.findAll()
+                .flatMap(this::populateTransactions);
     }
-
     @Override
     public Mono<BankAccount> getBankAccountById(Long id) {
         return bankAccountRepository.findById(id)
-                .switchIfEmpty(Mono.error(new BankAccountNotFoundException("Bank account not found")));
+                .switchIfEmpty(Mono.error(new BankAccountNotFoundException("Bank account not found")))
+                .flatMap(this::populateTransactions);
     }
 
     @Override
@@ -76,4 +80,15 @@ public class BankAccountImpl implements BankAccountService {
                 .switchIfEmpty(Mono.error(new BankAccountNotFoundException("Bank account not found")))
                 .flatMap(bankAccountRepository::delete);
     }
+
+
+    private Mono<BankAccount> populateTransactions(BankAccount bankAccount) {
+        return transactionRepository.findByBankAccountId(bankAccount.getId())
+                .collectList()
+                .map(transactions -> {
+                    bankAccount.withTransactions(transactions);
+                    return bankAccount;
+                });
+    }
+
 }
