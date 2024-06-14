@@ -2,6 +2,8 @@ package co.com.bancolombia.demo.controllers;
 
 import co.com.bancolombia.demo.domain.entities.Transaction;
 import co.com.bancolombia.demo.services.TransactionService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,8 +30,10 @@ public class TransactionController {
     }
 
     @GetMapping
-    public Flux<Transaction> getAllTransactions() {
-        return transactionService.getAllTransactions();
+    public Flux<Transaction> getAllTransactions(@RequestParam(defaultValue = "0") int page,
+                                                @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return transactionService.getAllTransactions(pageable);
     }
 
     @GetMapping("/{id}")

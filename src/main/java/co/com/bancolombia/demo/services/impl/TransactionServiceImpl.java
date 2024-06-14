@@ -6,6 +6,7 @@ import co.com.bancolombia.demo.exceptions.InvalidBankAccountException;
 import co.com.bancolombia.demo.exceptions.TransactionNotFoundException;
 import co.com.bancolombia.demo.services.BankAccountService;
 import co.com.bancolombia.demo.services.TransactionService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -46,8 +47,8 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
-    public Flux<Transaction> getAllTransactions() {
-        return transactionRepository.findAll();
+    public Flux<Transaction> getAllTransactions(Pageable pageable) {
+        return transactionRepository.findAll(pageable);
     }
 
     @Override

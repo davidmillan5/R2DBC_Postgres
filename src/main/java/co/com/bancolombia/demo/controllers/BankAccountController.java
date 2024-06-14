@@ -2,6 +2,8 @@ package co.com.bancolombia.demo.controllers;
 
 import co.com.bancolombia.demo.domain.entities.BankAccount;
 import co.com.bancolombia.demo.services.BankAccountService;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +28,10 @@ public class BankAccountController {
     }
 
     @GetMapping
-    public Flux<BankAccount> getAllBankAccounts() {
-        return bankAccountService.getAllBankAccounts();
+    public Flux<BankAccount> getAllBankAccounts(@RequestParam(defaultValue = "0") int page,
+                                                @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return bankAccountService.getAllBankAccounts(pageable);
     }
 
     @GetMapping("/{id}")

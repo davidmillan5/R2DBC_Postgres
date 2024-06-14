@@ -7,6 +7,7 @@ import co.com.bancolombia.demo.domain.repositories.TransactionRepository;
 import co.com.bancolombia.demo.domain.repositories.UserRepository;
 import co.com.bancolombia.demo.exceptions.UserNotFoundException;
 import co.com.bancolombia.demo.services.UserService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
@@ -32,9 +33,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Flux<User> getAllUsers() {
+    public Flux<User> getAllUsers(Pageable pageable) {
         return userRepository
-                .findAll()
+                .findAll(pageable)
                 .flatMap(this::populateUserAccounts);
     }
 

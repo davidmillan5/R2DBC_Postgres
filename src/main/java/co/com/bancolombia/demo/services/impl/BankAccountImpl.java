@@ -8,6 +8,7 @@ import co.com.bancolombia.demo.exceptions.BankAccountNotFoundException;
 import co.com.bancolombia.demo.exceptions.InvalidUserException;
 import co.com.bancolombia.demo.services.BankAccountService;
 import co.com.bancolombia.demo.services.UserService;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -50,8 +51,8 @@ public class BankAccountImpl implements BankAccountService {
     }
 
     @Override
-    public Flux<BankAccount> getAllBankAccounts() {
-        return bankAccountRepository.findAll()
+    public Flux<BankAccount> getAllBankAccounts(Pageable pageable) {
+        return bankAccountRepository.findAll(pageable)
                 .flatMap(this::populateTransactions);
     }
     @Override
